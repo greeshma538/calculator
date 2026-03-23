@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Attractive Calculator</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,Roboto,Arial,sans-serif}
+  body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#4facfe,#00f2fe);
+  }
+  .calculator{
+    width:320px;
+    backdrop-filter:blur(18px);
+    background:rgba(255,255,255,0.15);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+  }
+  .display{
+    height:70px;
+    background:rgba(0,0,0,.2);
+    border-radius:15px;
+    margin-bottom:18px;
+    padding:15px;
+    text-align:right;
+    color:#fff;
+    font-size:2rem;
+    overflow:hidden;
+    word-wrap:break-word;
+  }
+  .buttons{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+  }
+  button{
+    height:60px;
+    border:none;
+    border-radius:15px;
+    font-size:1.2rem;
+    cursor:pointer;
+    transition:.15s;
+    background:rgba(255,255,255,.25);
+    color:#fff;
+  }
+  button:hover{transform:scale(1.08);background:rgba(255,255,255,.35)}
+  .operator{background:rgba(255,165,0,.7)}
+  .equal{background:rgba(0,200,120,.8);grid-column:span 2}
+  .clear{background:rgba(255,80,80,.8)}
+  .zero{grid-column:span 2}
+</style>
+</head>
+<body>
+<div class="calculator">
+  <div id="display" class="display">0</div>
+  <div class="buttons">
+    <button class="clear">C</button>
+    <button class="operator">/</button>
+    <button class="operator">*</button>
+    <button class="operator">-</button>
+    <button>7</button>
+    <button>8</button>
+    <button>9</button>
+    <button class="operator">+</button>
+    <button>4</button>
+    <button>5</button>
+    <button>6</button>
+    <button>.</button>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+	<button class="operator">(</button>
+    <button class="equal">=</button>
+    <button>0</button>
+	<button class="operator">)</button>
+  </div>
+</div>
+<script>
+const display=document.getElementById('display');
+let current='';
+function update(val){display.textContent=val||'0'}
+function calculate(){
+  try{current=eval(current).toString();update(current)}
+  catch{update('Error');current=''}
+}
+document.querySelectorAll('button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const value=btn.textContent;
+    if(value==='C'){current='';update(0)}
+    else if(value==='='){calculate()}
+    else{current+=value;update(current)}
+  })
+});
+document.addEventListener('keydown',e=>{
+  if('0123456789+-*/.'.includes(e.key)){current+=e.key;update(current)}
+  if(e.key==='Enter')calculate();
+  if(e.key==='Backspace'){current=current.slice(0,-1);update(current)}
+  if(e.key==='Escape'){current='';update(0)}
+});
+</script>
+</body>
+</html>
+
+   
